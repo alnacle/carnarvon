@@ -1,0 +1,11 @@
+Source: carnarvon
+Section: python
+Priority: optional
+Maintainer: Alvaro Navarro <anavarro@signal11.org>
+Build-Depends: python2.4
+Standards-Version: 3.6.1.1
+
+Package: carnarvon
+Architecture: all
+Depends: python (>= 2.3), python (<< 2.4), python2.4-mysqldb, gnuplot, exuberant-ctags
+Description: Software Archaeology Tool

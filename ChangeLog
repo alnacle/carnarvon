@@ -1,0 +1,301 @@
+2007-04-05  Gregorio Robles  <grex@gsyc.escet.urjc.es>
+
+	* Tables.py: added field that gives is line is a blank line
+	* File.py: added if a line is a blank line
+	* FileCVS.py: added if a line is a blank line
+	* FileSVN.py: added if a line is a blank line
+	* setup.py: Putting myself as maintainer
+	* Stats.py: size measures aggregated
+	* Web.py: size measures aggregated
+
+2007-03-28  Gregorio Robles  <grex@gsyc.escet.urjc.es>
+
+	* Stats.py: Bug fixed. Now date_50 is also printed. Even when it's 0
+	* Functions.py: Bug fixed. ValueError exception catched when
+			exuberant ctags returns empty
+	* ParserConfigFile.py: Bug fixed in function DaysMonth. Now the 
+			       evolutionary study takes constant slots.
+	
+2007-03-27  Gregorio Robles  <grex@gsyc.escet.urjc.es>
+
+	* Web.py: More info and graphs now in the index page
+	* Stats.py: Enhanced the stats here and there and everywhere
+	
+2007-03-26  Gregorio Robles  <grex@gsyc.escet.urjc.es>
+
+	* Web.py: removed Abs5a and Rel5a stats (not needed anymore)
+		  improved other stats
+		  bug fixed for orphaning
+		  added orphaning factor
+	* Stats.py: removed Abs5a and Rel5a stats (not needed anymore)
+	* INSTALL: exuberant ctags is also needed!
+
+2007-03-25  Gregorio Robles  <grex@gsyc.escet.urjc.es>
+
+	* FileSVN.py: dir_id had always -1 as value (fixed)
+		      iscomment had always 0 as value (fixed)
+		      date had always 00:00:00 as time (fixed)
+		      ext bug (see 2007-03-23) error fixed
+	* Functions.py: changed to ctags-exuberants, which is the Debian
+			way of calling it. Maybe we should put this in the
+			config file!
+
+2007-03-23  Gregorio Robles  <grex@gsyc.escet.urjc.es>
+
+	* Wizard.py: English refined
+	* Main.py: English refined
+	* FileSVN.py: ext lines commented due to error!
+
+2006-09-30  Alvaro Navarro  <anavarro@gsyc.esceturjc.es>
+
+	* Commiter.py: getid and commiter2sql methods removed
+	* Main.py: new option added: --verbose
+	* Main.py: removed annoying verbose data
+	* ConnectionFactory: new way to create objects
+	* ConnectionSQLite: new backend added
+	* Repository.py: clean method fixed
+	* Repository.py: fixed bug in annotate method. When number of files
+	were minor than number of threads, program crashed.
+	* Timestamp.py: getid and timestamp2sql methods removed
+
+2006-09-01  Alvaro Navarro  <anavarro@gsyc.esceturjc.es>
+
+	* stats.py: new class to store general metrics
+	* web.py: new index.html with new graphs
+
+2006-08-31  Alvaro Navarro  <anavarro@gsyc.esceturjc.es>
+
+	* web.py: fixed bugs
+	* web.py: orphandad index added, new graphs and metrics
+	* stats.py: fixed bugs with actual dates
+
+2006-08-26  Alvaro Navarro  <anavarro@gsyc.esceturjc.es>
+
+	* wizard.py: fixed bugs
+	* database.py: added indexes
+	* web.py: new visualization method.
+	* web.py: new class WebStatFile
+	* repository.py: fixed bugs
+	* directory.py: new methods to store directories in memory
+	* svg.py: new graphs
+	* webmain.py: new main loop with more details level
+
+2006-08-06  Alvaro Navarro  <anavarro@gsyc.esceturjc.es>
+
+	* svg.py: LineGraph class added
+	* web.py: now parser svg files
+
+2006-08-02  Alvaro Navarro  <anavarro@gsyc.esceturjc.es>
+
+	* functions.py: new file added
+	* directories.py: new file added
+	* tables.py: new file to store tables
+	* filecvs.py: functions are now stored
+	* progressbar.py: file removed
+
+2006-07-31  Alvaro Navarro  <anavarro@gsyc.esceturjc.es>
+
+	* svg.py: new graphs
+
+2006-07-19  Carlos Gonzalez <cgonzalezsanch@uoc.edu>
+
+	* man pages updated
+	* MANIFEST.in: new file for handling setup.py data_files section
+	* setup.py: data_files section updated for man pages and template html files inclusion
+
+2006-07-04  Carlos Gonzalez <cgonzalezsanch@uoc.edu>
+
+	* web.py: bug fixed: under MacOSX only the contents of the images directory were copied
+	          but the directory itself was not being copied. Explanation:
+		http://www.macosxhints.com/article.php?story=20051112100007372
+	* web.py: carnarvon logo file incorporated to html header
+	* newstyle.css: new styles for logo
+
+2006-06-20  Alvaro Navarro <anavarro@gsyc.escet.urjc.es>
+
+	* INSTALL: new file added
+	* pycarnarvon: renamed directory
+	* wizard.py: removed automatic creating of database
+
+2006-05-28  Alvaro Navarro <anavarro@gsyc.escet.urjc.es>
+
+	* web.py: new visualization method
+	* database.py: bug fixed: new user/database
+
+2006-05-17  Alvaro Navarro <anavarro@gsyc.escet.urjc.es>
+
+	* webmain.py: new module
+	* web.py: class that represents each web
+	* web.py: metrics added
+
+2006-05-14  Alvaro Navarro <anavarro@gsyc.escet.urjc.es>
+
+	* database.py: new class
+	* connection_framework: new framework with differents backends
+	* progressbar.py: no longer needed
+	* filecvs, filesvn: no progressbar
+	* parserconfig.py: fixed bug in evolution study
+
+2006-04-18  Alvaro Navarro <anavarro@gsyc.escet.urjc.es>
+
+	* mainstats.py: write new main loop
+	* timestamp.py: iterator pattern implemented. easy way to manage dates
+	* timestamp.py: added graphs and metrics
+
+2006-04-17  Alvaro Navarro <anavarro@gsyc.escet.urjc.es>
+
+	* database.py: new getTables function
+	* parserconfigfile.py: extract timestamp operations from main
+	* carnarvon2html: new script added in order to create graphs
+	* mainstats.py: main loop por carnarvon2html
+
+2006-04-15  Alvaro Navarro <anavarro@gsyc.escet.urjc.es>
+
+	* filecvs.py: comments are stored now
+	* filesvn.py: comments are stored now
+
+2006-04-11  Alvaro Navarro <anavarro@gsyc.escet.urjc.es>
+
+	* wizard.py: new wizard added
+	* main.py: new filed iscomment in annotates (now stores comments too)
+	* sendmail.py: new class added
+	* parserconfig.py: variables for sendmail
+
+2006-04-06  Alvaro Navarro <anavarro@gsyc.escet.urjc.es>
+
+	* stats.py: optimize get dates function
+	* database.py: exception integrity database
+	* globals.py: added metainfo about program
+	* database.py: function close()
+
+2006-04-03  Alvaro Navarro <anavarro@gsyc.escet.urjc.es>
+
+	* repository.py: fixed bug in collect function
+	* stats.py: new way to make lines graph
+	* parserconfig.py: new filed start_date. with blank gets actual date
+	* main.py: no graphs in this step
+
+2006-03-30  Alvaro Navarro <anavarro@gsyc.escet.urjc.es>
+
+	* globals.py: fixed bug with mkdir function
+
+2006-03-29  Alvaro Navarro <anavarro@gsyc.escet.urjc.es>
+
+	* fileCVS.py: compare date between max_date and timestamp
+	* fileCVS.py: report function that print in a file errors
+	* globals.py: added new file to store static data
+	* globals.py: mkdir added
+	* main.py: removed mkdir
+	* repository.py: total files in progressbar is relative to maxfiles
+
+2006-03-28  Alvaro Navarro <anavarro@gsyc.escet.urjc.es>
+
+	* fileCVS.py: now revision is stored completly
+	* main.py: revision filed in annotates table, now is varchar
+	* main.py: timestamps now is sotored in main loop
+	* parserconfig.py: new format to max_date (year-month-day)
+
+2006-03-27  Alvaro Navarro <anavarro@gsyc.escet.urjc.es>
+
+	* respository.py: now add files into database before analysis.
+	* docs: new directory added
+	* fileCVS.py: db_object passed for adding commiters in parse time
+	* commiter.py: modified setcommiter function
+	* commiter.py: added mutex
+	* file.py: modified addfile function
+	* main.py: deleted last step
+
+2006-03-23  Alvaro Navarro <anavarro@gsyc.escet.urjc.es>
+
+	* repository.py: bug in collect function. list should be initialized
+
+2006-03-22  Alvaro Navarro <anavarro@gsyc.escet.urjc.es>
+
+	* stats.py: graphs with more options such xyscales
+	* stats.py: optimization of some graphs
+
+2006-03-21  Alvaro Navarro <anavarro@gsyc.escet.urjc.es>
+
+	* repository.py: new way to make checkouts
+	* stats.py: graphs output to gnuplot
+
+2006-03-20  Alvaro Navarro <anavarro@gsyc.escet.urjc.es>
+
+	* repositorySVN: deleted, no longer needed
+	* repositoryCVS: deleted, no longer needed
+	* repository.py: added progressbar and only one blame method
+	* database.py: new method added 'createUser'. fixed bugs
+	* main.py: new way to initialize database.
+	* parserConfig.py: fixed bug when calculate dates
+	* stats.py: new way to make graphs in memory
+
+2006-03-13  Alvaro Navarro <anavarro@gsyc.escet.urjc.es>
+
+	* fileSVN.py: fixed bug in date
+
+2006-03-09  Alvaro Navarro <anavarro@gsyc.escet.urjc.es>
+
+	* fileSVN.py: SVN Fixed bugs. Some logs without commiter
+
+2006-03-09  Alvaro Navarro <anavarro@gsyc.escet.urjc.es>
+
+	* fileSVN.py: SVN support checkout and blame
+
+2006-03-08  Alvaro Navarro <anavarro@gsyc.escet.urjc.es>
+
+	* debian: New debian directory. Support debian packages
+
+2006-03-08  Alvaro Navarro <anavarro@gsyc.escet.urjc.es>
+
+	* Added heads with license and comments to pydoc
+	* main.py: New main loop
+
+2006-03-01  Alvaro Navarro <anavarro@gsyc.escet.urjc.es>
+
+	* New study in time added
+
+2006-02-23  Alvaro Navarro <anavarro@gsyc.escet.urjc.es>
+
+	* threadworkd.py: fixed theard bugs
+	* commiter.py: Commiter class support
+	* database.py: Database class updated
+	* repository.py: Updated file factory repository
+	* fileCVS: fixed bugs
+
+2006-02-22  Alvaro Navarro <anavarro@gsyc.escet.urjc.es>
+
+	* threadworkd.py: threads full support with files
+	* database.py: Database class new methods
+	* repository.py: New class factory. Now should be easier create new repositories
+	* fileCVS.py: updated with new methods
+
+2006-02-22  Alvaro Navarro <anavarro@gsyc.escet.urjc.es>
+
+	* main.py: Main fixed bugs
+
+2006-02-15  Alvaro Navarro <anavarro@gsyc.escet.urjc.es>
+
+	* threadworkd.py: theads support
+	* main.py: Fixed bugs
+	* database.py: Database class updated
+	* repository: New classes CVS and SVN.
+	* Main updated again
+
+2006-02-14  Alvaro Navarro <anavarro@gsyc.escet.urjc.es>
+
+	* database.py: Database class fixed bugs
+	* main.py: Main steps alterations
+
+2006-01-11  Alvaro Navarro <anavarro@gsyc.escet.urjc.es>
+
+	* bug dates in blames fixed
+
+2006-01-04  Alvaro Navarro <anavarro@gsyc.escet.urjc.es>
+
+	* man pages updated
+	* main.py: Updated files names
+
+2005-12-29  Alvaro Navarro <anavarro@gsyc.escet.urjc.es>
+
+	* Initial import
+

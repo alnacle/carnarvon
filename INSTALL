@@ -1,0 +1,44 @@
+Requirements
+------------
+carnarvon has the following dependencies:
+
+    * cvs
+    * subversion
+    * python-2.x-MySQLdb
+    * gnuplot
+    * exuberant ctags
+
+
+Installation
+------------
+Run setup.py script (if necessary as root):
+
+    python setup.py install
+
+
+Running carnarvon
+-----------------
+carnarvon needs a config file in order to run. You can generate
+this config file in two ways:
+
+    carnarvon -a my.conf
+
+will generate a basic template. Edit it with your proper values.
+
+    carnarvon -w my.conf
+
+will execute a wizard in order to generate the config file step
+by step.
+
+Once you have a proper config file, you will be able to run carnarvon:
+
+    carnarvon my.conf
+
+Note that carnarvon accepts several flags. Try running carnarvon
+without arguments.
+
+After carnarvon finishes the analysis of the given project, run the other 
+tools in order to get graphs and a nice website:
+
+    carnarvon2web my.conf
+

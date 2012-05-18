@@ -1,0 +1,66 @@
+.TH carnarvon2web 1 "July 2006"
+.SH NAME
+carnarvon2web \-  A tool for 
+.I carnarvon
+the software archaeology analysis tool
+
+.SH SYNOPSIS
+.B carnarvon2web
+[
+.B -h, --help
+] [
+.B -o, --options
+] [
+.B -d, --driver
+.I DRIVER
+] [
+.B -w, --no-html
+] [
+.B -s, --stic-time
+] 
+config_file
+
+.SH DESCRIPTION
+
+A lot of software, mostly open source software, is developed using version control tools from which it is possible to extract even when a single line of code was edited for the last time. To collect all this kind of data and analyze it statistically could show information in terms of software aging and indicators of maintainability could be obtained  from different perspectives, systems area and development area, for example.
+
+.SH GENERAL OPTIONS
+
+.TP
+.B -h, --help
+Print a help message.
+
+.TP
+.B -o, --options
+Print the posting options.
+
+.TP
+.B -d, --driver DRIVER
+Output driver [mysql|stdout]
+
+.TP
+.B -w, --no-html
+Don't create html output (only graphs)
+
+.TP
+.B -s, --stic-time
+Modify tic space time in lines/time graph
+
+.SH USAGE
+
+carnarvon2web needs a config file in order to run. You must generate
+this config file following the instructions contained in 
+.I carnarvon 
+manual page.
+
+Once you have generated the config file and executed carnarvon against a project 
+repository, then you are ready to render some graphs with carnarvon2web:
+
+.B     carnarvon2web my.conf
+
+.SH SEE ALSO
+carnarvon(1)
+
+.SH AUTHOR
+Alvaro Navarro (anavarro@gsyc.escet.urjc.es)
+Carlos Gonzalez (karlhangas@gmail.com)

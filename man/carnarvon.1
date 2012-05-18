@@ -1,0 +1,103 @@
+.TH carnarvon 1 "July 2006"
+.SH NAME
+carnarvon \-  A software archaeology analysis tool
+
+.SH SYNOPSIS
+.B carnarvon
+[
+.B -h, --help
+] [
+.B -o, --options
+] [
+.B -d, --driver
+.I DRIVER
+] [
+.B -t, --max-threads
+.I MAXTHREADS
+] [
+.B -w, --wizard
+] [
+.B -a, --automatic
+] [
+.B -c, --no-checkout
+] [
+.B -r, --no-clean
+] [
+.B -l, --no-log
+] 
+[config_file]
+
+.SH DESCRIPTION
+
+A lot of software, mostly open source software, is developed using version control tools from which it is possible to extract even when a single line of code was edited for the last time. To collect all this kind of data and analyze it statistically could show information in terms of software aging and indicators of maintainability could be obtained  from different perspectives, systems area and development area, for example.
+
+.SH GENERAL OPTIONS
+
+.TP
+.B -h, --help
+Print a help message.
+
+.TP
+.B -o, --options
+Print the posting options.
+
+.TP
+.B -d, --driver DRIVER
+Output driver [mysql|stdout]
+
+.TP
+.B -t, --max-threads MAXTHREADS
+Max number of threads [default=2]
+
+.TP
+.B -w, --wizard
+Create a config file step by step
+
+.TP
+.B -a, --automatic
+Autogenerate a basic template config file
+
+.TP
+.B -c, --no-checkout
+Don't checkout repository automatically.
+
+.TP
+.B -r, --no-clean
+Don't clean source directory after checkout
+
+.TP
+.B -l, --no-log
+Don't log repository automatically.
+
+.SH USAGE
+
+carnarvon needs a config file in order to run. You can generate
+this config file in two ways:
+
+.B     carnarvon -a my.conf
+
+will generate a basic template. Edit it with your proper values.
+
+.B     carnarvon -w my.conf
+
+will execute a wizard in order to generate the config file step
+by step.
+
+Once you have a proper config file, you will be able to run carnarvon:
+
+.B     carnarvon my.conf
+
+Note that carnarvon accepts several flags. Try running carnarvon
+without arguments.
+
+After carnarvon finishes the analysis of the given project, run the other 
+tool in order to get graphs and a nice website:
+
+.B     carnarvon2web my.conf
+
+.SH SEE ALSO
+carnarvon2web(1)
+
+.SH AUTHOR
+Alvaro Navarro (anavarro@gsyc.escet.urjc.es)
+Carlos Gonzalez (karlhangas@gmail.com)
