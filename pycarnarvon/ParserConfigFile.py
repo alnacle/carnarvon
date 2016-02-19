@@ -150,7 +150,7 @@ class ParserConfigFile:
                             sys.exit ("Error: invalid value in line %s" % (line))
                             self.config_map[var_name] = realbool
                     except KeyError:
-                        pass
+                        print "{}".format(e)
 
         f.close()
         self.check_values()
@@ -180,9 +180,6 @@ class ParserConfigFile:
         x = datetime(int(year),int(month),int(day))
         d = str(x).split(" ")
 
-        #print "[*] Calculating range of dates: "
-        #print "\t* Adding " + str(str(d[0]))
-
         self.dates.append(str(d[0]))
 
         if self.parse_bool(self.config_map['evolution']):
@@ -194,14 +191,13 @@ class ParserConfigFile:
             return 31
         elif f.month-1 in (4,6,9,11):
             return 30
-        else:  # febrero
+        else:
             if (f.year % 4) == 0 and not((f.year % 400) in (100,200,300)):
                 return 29
             else:
                 return 28
 
     def SumMonths(self,delta, ini):
-        #res = ini.replace(day=1)
         res = ini
         for x in range (0,delta):
             res -= timedelta(self.DaysMonth(res))
@@ -215,9 +211,6 @@ class ParserConfigFile:
         """
         Get current datetime and calculate secuence of dates
         """
-        #current = strftime('%d/%m/%Y')
-        #components = current.split("/")
-
         myear = str(self.config_map['max_date']).split("-")
         if len(myear) <= 1:
             sys.exit("\nError in max_date format. Check your config file\n")
@@ -227,15 +220,14 @@ class ParserConfigFile:
         while int(x.year) >= int(myear[0]):
             x = self.SumMonths(int(self.config_map['frequency']),x)
             d = str(x).split(" ")
-            #print "\t* Adding " + str(str(d[0]))
             self.dates.append(str(d[0]))
 
     def parse_bool(self,instr):
         "Parse a boolean string, return 0 or 1, or -1 on error."
 
-        if instr in ("yes", "y", "true", "t", "on", "1", "si"):
+        if instr in ("yes", "y", "true", "t", "on", "1", "si", "ja"):
             return 1
-        elif instr in ("no", "n", "false", "f", "off", "0", "no"):
+        elif instr in ("no", "n", "false", "f", "off", "0", "no", "nein"):
             return 0
         else:
             return -1

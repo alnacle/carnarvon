@@ -28,9 +28,9 @@ Class that implements basic directories operations
 @contact:      anavarro@gsyc.escet.urjc.es
 """
 
-class node:
-    """ 
-    Node of the tree hirealchy 
+class Node(object):
+    """
+    Node of the tree hirealchy
     """
 
     number = 1
@@ -49,14 +49,16 @@ class node:
     def __repr__(self):
         return str(self.number) + " " + str(self.left) + " " + str(self.right) + " " + str(self.children)
 
-class tree:
-    """ Tree class """
+class Tree:
+    """
+    Tree class
+    """
 
     directories = {}
 
     def __init__(self,dir_id):
         self.number = dir_id
-        self.root = node(self.number, 1, 2, {})
+        self.root = Node(self.number, 1, 2, {})
         #self.number += 1
 
     def destroy(self):
@@ -102,10 +104,10 @@ class tree:
         return id
 
     def tree2sql(self,db,node,name,father_id, output=""):
-        #Transform Tree in mysql syntax 
+        #Transform Tree in mysql syntax
 
         if name != "":
-            entire_name = tree.directories[node.number]
+            entire_name = Tree.directories[node.number]
             query = "INSERT INTO directories " +\
                 "(module_id, lft, rgt, father_dir, module) " + \
                 "VALUES ('" + \
@@ -146,25 +148,25 @@ class tree:
 
             # If it doesn't exists, we creat it
             except KeyError:
-                tree.directories[self.number] = path
+                Tree.directories[self.number] = path
                 right_father = iterator.right
                 aux = self.root
                 self.updatelr(right_father,self.root)
 
-                iterator.children[slice] = node(self.number, right_father, right_father+1, {})
+                iterator.children[slice] = Node(self.number, right_father, right_father+1, {})
                 self.number+=1
                 iterator = iterator.children[slice]
             #DEBUG
             #print self.root
 
     def showdirs(self):
-        print str(tree.directories)
+        print str(Tree.directories)
 
     def get_id(path):
         key = -1
-        dkeys = tree.directories.keys()
+        dkeys = Tree.directories.keys()
         for d in dkeys:
-            if tree.directories[d] == path:
+            if Tree.directories[d] == path:
                 key = d
 
         return key
@@ -184,8 +186,8 @@ class Directory:
 
     def __init__(self,properties_dict=None,files_list=None):
         """
-        Constructor. 
-        Can accept a dictionary containing the properties, 
+        Constructor.
+        Can accept a dictionary containing the properties,
         and a list of files objects stored in this dir.
         """
 
@@ -208,7 +210,7 @@ class Directory:
         return (Directory.__directories[path])
 
     def directory2sql(db):
-        mtree = tree(0)
+        mtree = Tree(0)
         keys = Directory.__dir_keys.keys()
         keys.sort()
         for dir in keys:
@@ -217,7 +219,7 @@ class Directory:
         mtree.tree2sql(db, mtree.root, "",0)
 
     def add_directory(directory):
-        """ 
+        """
         Create a tree hierarchy from the created_dirs list
         """
         if directory not in Directory.__directories:
@@ -226,7 +228,7 @@ class Directory:
 
     def search_directory(self,dir_id):
         """
-        Looks for a directory with a given id. 
+        Looks for a directory with a given id.
         It returns a Directory object, or None if given id does not exist.
         """
 
@@ -236,7 +238,7 @@ class Directory:
             directory = None
 
         return directory
- 
+
     def add_properties(self, properties):
         """ Add properties """
         self.properties_dict = properties
@@ -256,7 +258,7 @@ class Directory:
 
 if __name__ == '__main__':
 
-    my_tree = tree(0)
+    my_tree = Tree(0)
     my_tree.addDirectory("/usr/local/bin")
     my_tree.addDirectory("/usr/home/bin")
     my_tree.addDirectory("/usr/share")
@@ -264,11 +266,11 @@ if __name__ == '__main__':
     my_tree.addDirectory("/lib/tomais")
     my_tree.tree2sql(None,my_tree.root,"",0)
 
-    my_tree = tree(0)
+    my_tree = Tree(0)
     my_tree.addDirectory("/usr/home/bin")
     my_tree.tree2sql(None,my_tree.root,"",0)
     my_tree.getid('/usr/home/bin')
     my_tree.getid('/usr/share')
     my_tree.getid('/lib/tomais')
     my_tree.getid('/system32')
-	
+

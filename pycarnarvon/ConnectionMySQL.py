@@ -34,6 +34,7 @@ try:
     import _mysql_exceptions
 except:
     sys.exit("python MySQLdb not found! Please install first")
+
 import Connection as cn
 
 class ConnectionMySQL(cn.Connection):
@@ -41,26 +42,16 @@ class ConnectionMySQL(cn.Connection):
     def __init__(self):
         self._conn = None
 
-    def connect(self, user='', passwd='', host='', db=''):
-
+    def connect(self, user=None, passwd=None, host=None, db=None):
         self._conn = _mysql.connect(host, user, passwd, db)
 
     def execute(self, query):
-
-        #print str(query)
         self._conn.query(query)
-        result = self._conn.store_result()
-
-        return result
+        return self._conn.store_result()
 
     def close(self):
-
-        try:
-            if self._conn != None:
-                self._conn.close()
-        except:
-            pass
+        if self._conn != None:
+            self._conn.close()
 
         self._conn = None
 
- 

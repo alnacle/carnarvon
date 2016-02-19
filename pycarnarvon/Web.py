@@ -17,7 +17,7 @@
 # Authors : Alvaro Navarro <anavarro@gsyc.escet.urjc.es>
 
 """
-Web class 
+Web class
 
 
 @author:       Alvaro Navarro
@@ -108,21 +108,14 @@ class Web:
         output.close()
 
         # Copy images and css
-        gb.Globals.createdir(self.path + "/images/")
-
-        try:
-            for img in self.images:
-                os.system("cp -fR " + self.templates + "/images/" + img + " " + self.path + "/images/")
-            for stl in self.styles:
-                os.system("cp -fR " + self.templates + "/" + stl + " " + self.path)
-        except:
-            pass
+        gb.Globals.createdir(os.path.join(self.path, "images"))
 
     def generate_graphs(self):
         import os
 
-        os.system("cd " + self.path + " && gnuplot *plot 2> /dev/null")
-        
+        os.chdir(os.path.join(self.path))
+        os.system("gnuplot *plot 2> /dev/null")
+
     def generate_body(self):
         pass
 
@@ -140,11 +133,11 @@ class WebIndex(Web):
                        'snapshot_AggSize.png',
                        'snapshot_aging.png',
                        'snapshot_relaging.png',
-                       'snapshot_date50.png',                       
+                       'snapshot_date50.png',
                        'snapshot_progeria.png',
-                       'snapshot_orphaned.png',                      
+                       'snapshot_orphaned.png',
                        'snapshot_orphFactor.png']
-        
+
         Web.__init__(self)
         self.path = gb.Globals.workspace
         self.templates = gb.Globals.templates
@@ -153,13 +146,12 @@ class WebIndex(Web):
 
     def generate_body(self):
         # Create HTML output from metadatafile, graphs and metrics
-
         print "         => Generating Stats"
         gstat = stmodule.GeneralStat()
         gstat.stats2dat(self.path)
         print "         => Generating Graphs"
         self.generate_graphs()
-        
+
         html = "<body>\n"
         html += "<div class=\"header\" style=\"height:76px;\"><b>Archaeology Stats</b></div>\n"
         html += "<div id=\"logo\">\n"
@@ -170,7 +162,7 @@ class WebIndex(Web):
         html += "<br><br><br><br>"
         for img in self.graphs:
                  html += "<img border=\"0\" src=\"" + img + "\" height=480 width=640>\n"
-                 
+
         html += "</div>\n"
         html += "<div style=\"float:left;\">\n"
         html += "</div>\n"
@@ -185,7 +177,7 @@ class WebStat(Web):
     def __init__(self, date, target, flags=15):
         """
         Constructor
-        
+
         @type  date: String
         @param date: Date of the current stamp
         @type  target: database_object
@@ -230,11 +222,11 @@ class WebStat(Web):
 
         # Is the current page a statistic web of a directory?
         self.isDirectory = 0
-        
+
         # Path to disk data
         self.filename = date
         self.path_without_dir = ""
-        self.path = gb.Globals.workspace + "/stats_" + self.filename + "/"
+        self.path = os.path.join(gb.Globals.workspace, "stats_", self.filename)
 
         # Create path which will contain the current web
         gb.Globals.createdir(self.path)
@@ -245,13 +237,9 @@ class WebStat(Web):
         # Path to database data
         self.table = 'annotates_' + date
 
-    #def generate_graphs(self):
-    #    import os
-    #    os.system("cd " + self.path + " && gnuplot *plot 2> /dev/null")
-
     def read_file2table(self, file):
 
-        files = open(str(self.path) + "/" + file,'r')
+        files = open(os.path.join(self.path, file),'r')
 
         aux = ''
 
@@ -291,7 +279,7 @@ class WebStat(Web):
         lines = 0
         commiters = 0
         files = 0
-        
+
         try:
             print "         => Generating Stats"
             self.generate_stats()
@@ -302,17 +290,7 @@ class WebStat(Web):
             print "         => Generating General Stats"
             lines, commiters, files = self.get_general_stats()
         except:
-            pass
-        """
-        print "         => Generating Stats"
-        self.generate_stats()
-        print "         => Generating Graphs"
-        self.generate_graphs()
-        print "         => Generating Metrics"
-        self.generate_metrics()
-        print "         => Generating General Stats"
-        lines, commiters, files = self.get_general_stats()
-        """
+            print "Warning: unable to generate HTML body"
 
         html = ''
         html += "<body>\n"
@@ -335,12 +313,11 @@ class WebStat(Web):
         html += "<tr><td> <b>Progeria</b> </td><td> %2.2f </td><td>&gt;1 means the code base of the project is getting older (legacy) while &lt;1 means that the project code base is getting younger</td></tr>\n" % self.metrics['progeria']
         html += "<tr><td> <b>Orphaning</b> </td><td>" + str(self.metrics['orphy']) + " SLOC-month</td><td></td></tr>\n"
         html += "<tr><td> <b>Orphaning factor</b> </td><td>" + str(self.metrics['orphy_factor']) + "</td><td></td></tr>\n"
-#        html += "<tr><td> <b>Total Lines</b> </td><td>" + str(lines) + "</td></tr>\n"
         html += "</table>\n"
 
         gstat = stmodule.GeneralStat()
         gstat.add_stats(self.date, self.metrics)
-        
+
         # Tables and graphs
         for fdate in self.source:
              html += "<h3 class=\"title\"> " + fdate + " </h3>\n"
@@ -381,9 +358,9 @@ class WebStat(Web):
         Extract current directories from the timestamp we're building
 
         @type entire: int
-        @param entire: if 0, querys will use dir_id index, else, query will use the entire table 
+        @param entire: if 0, querys will use dir_id index, else, query will use the entire table
         """
-        
+
         if entire == 0:
             dirs = self.db.query("module_id, module", "directories", "father_dir=" + self.dir_id)
         else:
@@ -395,7 +372,7 @@ class WebStat(Web):
             html += "<a href=" + self.path_without_dir + str(module[1:]) + "/index.html>" + str(module[1:]) + "</a><br>\n"
 
         html += "<br><br>"
-        
+
         return html
 
     def generate_stats(self):
@@ -442,8 +419,8 @@ class WebStat(Web):
         """
 
         try:
-            input = open(self.path + '/' + self.source['lines'], 'r')
-        except:
+            input = open(os.path.join(self.path, self.source['lines']), 'r')
+        except IOError:
             sys.exit("Error: File " + str(self.source['lines']) + " not found")
 
         actualyear = self.date.split("-")[0]
@@ -501,7 +478,7 @@ class WebDirStat(WebStat):
 
         # Path to disk data
         self.filename = date
-        self.path = gb.Globals.workspace + "/stats_" + self.filename + "/" + self.directory + "/"
+        self.path = os.path.join(gb.Globals.workspace, "stats_", self.filename, self.directory)
         gb.Globals.createdir(self.path)
 
         # Path to the html's templates
@@ -511,7 +488,7 @@ class WebDirStat(WebStat):
         self.table = 'annotates_' + date
 
         # Path without Dir file
-        self.path_without_dir = gb.Globals.workspace + "/stats_" + self.filename + "/"
+        self.path_without_dir = os.path.join(gb.Globals.workspace, "stats_", self.filename)
 
 class WebFileStat(WebStat):
     def __init__(self, date, target, file, file_id):
@@ -523,7 +500,7 @@ class WebFileStat(WebStat):
 
         # Path to disk data
         self.filename = date
-        self.path = gb.Globals.workspace + "/stats_" + self.filename + "/" + self.file + "/"
+        self.path = os.path.join(gb.Globals.workspace, "stats_", self.filename, self.file)
         gb.Globals.createdir(self.path)
 
         # Path to the html's templates
@@ -543,9 +520,7 @@ class WebFileStat(WebStat):
                 revs.append(int(str(rev[0]).split('.')[1]))
 
             line_graph =svgmodule.LinesGraph()
-            line_graph.print_to_file("/tmp/fichero_id_"+str(file_id)+".svg", revs)
-            #bar_graph = svgmodule.BarGraph()
-            #bar_graph.print_to_file("fichero_id_2.svg", revs)
+            line_graph.print_to_file(os.path.join("tmp", "fichero_id_"+str(file_id)+".svg"), revs)
 
     def generate_functions(self):
         pass
@@ -566,7 +541,6 @@ class WebFileStat(WebStat):
 
         menu = self.generate_menu()
         html += menu + "\n</body></html>"
-
 
         return html
 

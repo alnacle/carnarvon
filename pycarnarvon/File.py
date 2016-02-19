@@ -45,6 +45,7 @@ class File:
         self.timestamp = timestamp
         self.db = db_object
 
+    @staticmethod
     def file2sql(file,db):
         if file not in File.__files:
             File.__files[file] = len(File.__files)
@@ -52,9 +53,11 @@ class File:
             query += str(File.__files[file]) + "','" + str(file)  +"');\n"
             db.insertData(query)
 
+    @staticmethod
     def getid(file):
         return (File.__files[file])
 
+    @staticmethod
     def numfiles():
         return len(File.__files)
 
@@ -144,7 +147,3 @@ class File:
     def analyse(self):
         pass
 
-    # Static methods
-    numfiles = staticmethod(numfiles)
-    file2sql = staticmethod(file2sql)
-    getid = staticmethod(getid)

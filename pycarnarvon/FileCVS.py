@@ -45,7 +45,6 @@ import Functions as fnmodule
 class FileCVS(fmodule.File):
 
     def __init__ (self,name,timestamp, db_object, src_dir):
-
         self.name = name
         self.timestamp = timestamp
         self.src_dir = src_dir
@@ -57,7 +56,7 @@ class FileCVS(fmodule.File):
         write error output when a file contains a line with an
         incorrect line
         """
-        log_dir = Globals.workspace + "/error_" + str(self.timestamp).replace("-","_")
+        log_dir = os.path.join(Globals.workspace, "error_", str(self.timestamp).replace("-","_"))
         file_name = file[len(self.src_dir):]
         gbmodule.Globals.createdir(log_dir)
         output = open(log_dir + '/' + str(file_name).replace("/","_") + '.dat', 'a')
@@ -75,7 +74,7 @@ class FileCVS(fmodule.File):
         max_date = str(self.timestamp)
         act_date = self.transformIntoDateTime(str(d))
 
-        # Only actual_date from log file, has 00:00:00 format, so 
+        # Only actual_date from log file, has 00:00:00 format, so
         # we need to normalize that
         min = time.strptime(min_date + " 00:00:00", "%Y-%m-%d %H:%M:%S")
         max = time.strptime(max_date + " 00:00:00", "%Y-%m-%d %H:%M:%S")
@@ -151,5 +150,6 @@ class FileCVS(fmodule.File):
 
                     line_id += 1
 
-                except ValueError:
-                    pass
+                except ValueError as e:
+                    print "Ops! Something went bad while parsing: {}".format(e)
+

@@ -28,19 +28,19 @@ Connection factory class
 
 import sys
 
-class ConnectionFactory:
+class ConnectionFactory(object):
 
-    def create_connector_stdout ():
+    def create_connector_stdout():
         import ConnectionStdout
-        return ConnectionStdout.ConnectionStdout ()
+        return ConnectionStdout.ConnectionStdout()
 
-    def create_connector_mysql ():
+    def create_connector_mysql():
         import ConnectionMySQL
-        return ConnectionMySQL.ConnectionMySQL ()
+        return ConnectionMySQL.ConnectionMySQL()
 
-    def create_connector_sqlite ():
+    def create_connector_sqlite():
         import ConnectionSQLite
-        return ConnectionSQLite.ConnectionSQLite ()
+        return ConnectionSQLite.ConnectionSQLite()
 
     drivers = {                                     \
             'mysql'  : create_connector_mysql, \
@@ -48,13 +48,12 @@ class ConnectionFactory:
             'sqlite' : create_connector_sqlite \
     }
 
+    @staticmethod
     def create_connector (driver):
-        key = str(driver).lower ()
+        key = str(driver).lower()
 
-        if not ConnectionFactory.drivers.has_key (key):
+        if key in ConnectionFactory.drivers:
             sys.exit ("Driver %s is not yet implemented" % driver)
 
-        return ConnectionFactory.drivers[key] ()
-
-    create_connector = staticmethod (create_connector)
+        return ConnectionFactory.drivers[key]()
 

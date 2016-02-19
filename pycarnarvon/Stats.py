@@ -1,10 +1,10 @@
 # Copyright (C) 2006 Alvaro Navarro Clemente
-# 
+#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -49,7 +49,7 @@ class GeneralStat:
         GeneralStat.__single = self
 
     def add_stats(self, timestamp, values):
-        if not self.stats.has_key(timestamp):
+        if timestamp in self.stats:
             self.stats[timestamp] = values
 
     def stats2dat(self, path):
@@ -62,7 +62,7 @@ class GeneralStat:
                    "snapshot_age",
                    "snapshot_date50",
                    "snapshot_orphFactor"]
-        
+
         output = open (path + "/generalstat.dat", 'w')
 
         count = 1
@@ -96,7 +96,7 @@ class GeneralStat:
             output.write(result)
 
             count += 1
-            
+
         output.close()
 
         # generate gnuplot file from .dat
@@ -116,10 +116,10 @@ class GeneralStat:
             output.write('plot "' + path + '/generalstat.dat"')
             output.write(' using 1:' + str(count) + " title \'" + column.split("_")[1] + "\'" + '\n')
             output.close()
-            
+
             count += 1
 
-        
+
     def print_stats(self):
         print str(self.stats)
 
@@ -140,7 +140,7 @@ class Stats:
             self.where = "dir_id=" + str(self.dir_id)
         else:
             self.where = ""
-        
+
     def setDates(self, table):
         start_year,end_year = self.db.query('min(date),max(date)', table, self.where)[0]
 
@@ -152,21 +152,21 @@ class Stats:
 
         # Number of lines
         totalLines = int(self.db.query('count(*)', table, self.where)[0][0])
-        
+
         # Revision numbers (lines)
         output = open(self.stats_dir + '/revLines.dat', 'w')
 
         output.write('#Rev\tLines\tAgg\tPer\tPerAgg\n')
         linesTuple = self.db.query('revision, count(revision)', table, self.where, 'revision', 'revision')
         linesList = []
-        
+
         for tuple in linesTuple:
             linesList.append([str(tuple[0]), int(tuple[1])])
-            
+
         linesList.sort()
         sum = 0
         sumPer = 0
-        
+
         for line in linesList:
             sum += int(line[1])
             percentage = int(line[1]) * 100.0/totalLines
@@ -181,7 +181,7 @@ class Stats:
             output.write(result)
 
         output.close()
-            
+
         self.plot('revLines', 'revLines', 'Revision Stats', 'revision', 'lines', 1, 2, 'false','true')
         self.plot('revLines', 'revLines', 'Revision Stats', 'revision', 'Agg', 1, 3, 'false','true')
         self.plot('revLines', 'revLines', 'Revision Stats', 'revision', 'Per', 1, 4, 'false','true')
@@ -319,13 +319,13 @@ class Stats:
             column += 1
 
     def fileStatsOrder(self,table, order, column):
-        """    
-        # Number of files with all their lines with revision 1.1    
-        # Number of files with none of their lines with revision 1.1    
-        # For each file:    
-        #     * Number of distinct revisions    
-        #     * Number of distinct authors    
-        #     * Timespan from newest revision to oldest one    
+        """
+        # Number of files with all their lines with revision 1.1
+        # Number of files with none of their lines with revision 1.1
+        # For each file:
+        #     * Number of distinct revisions
+        #     * Number of distinct authors
+        #     * Timespan from newest revision to oldest one
         """
 
         # filename which contains the values
@@ -350,9 +350,9 @@ class Stats:
                 file_id += 1
                 output.write(final)
 
-            except ZeroDivisionError:
+            except ZeroDivisionError as e:
                 # File empty (or contains only comments or blank lines)
-                pass
+                print "File empty: {}".format(e)
 
         self.plot(filename, filename, 'Files', 'files', order, 1, column)
 

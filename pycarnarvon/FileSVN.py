@@ -114,4 +114,4 @@ class FileSVN(fmodule.File):
                     line_id += 1
 
                 except ValueError:
-                    pass
+                    print "Ops! Something went bad while parsing: {}".format(e)
