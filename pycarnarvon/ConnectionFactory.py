@@ -30,23 +30,26 @@ import sys
 
 class ConnectionFactory(object):
 
+    drivers = {
+            'mysql'  : create_connector_mysql,
+            'stdout' : create_connector_stdout,
+            'sqlite' : create_connector_sqlite
+    }
+
+    @staticmethod
     def create_connector_stdout():
         import ConnectionStdout
         return ConnectionStdout.ConnectionStdout()
 
+    @staticmethod
     def create_connector_mysql():
         import ConnectionMySQL
         return ConnectionMySQL.ConnectionMySQL()
 
+    @staticmethod
     def create_connector_sqlite():
         import ConnectionSQLite
         return ConnectionSQLite.ConnectionSQLite()
-
-    drivers = {                                     \
-            'mysql'  : create_connector_mysql, \
-            'stdout' : create_connector_stdout,  \
-            'sqlite' : create_connector_sqlite \
-    }
 
     @staticmethod
     def create_connector (driver):

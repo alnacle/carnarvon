@@ -77,8 +77,8 @@ class FileSVN(fmodule.File):
 
         # Only extract functions for C files
         ext = f.split('.')[-1]
-        if (ext == "c") or (ext == "cpp"):
-            func = fnmodule.Function(str(root) + "/" + f, file_id)
+        if ext in ["c", "cpp"]:
+            func = fnmodule.Function(os.path.join(str(root), f, file_id))
 
         while 1:
             line = o.readline()

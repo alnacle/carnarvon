@@ -112,8 +112,8 @@ class FileCVS(fmodule.File):
         dir_id  = dmodule.Directory.get_id(root[len(self.src_dir):])
 
         # Only extract functions for C files
-        if (ext == "c") or (ext == "cpp"):
-            func = fnmodule.Function(str(root) + "/" + f, file_id)
+        if ext in ["c", "cpp"]:
+            func = fnmodule.Function(os.path.join(str(root), f, file_id))
 
         while 1:
             line = annotate[1].readline()

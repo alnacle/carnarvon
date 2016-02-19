@@ -376,19 +376,19 @@ class Stats:
         output = open(self.stats_dir + '/' + outputFile + "_" + str(xlabel) + "_" + str(ylabel) + ".gnuplot", 'w')
 
         # Title of the Graph
-        if (ylogscale == '1' or ylogscale == 'true') and (xlogscale == '1' or ylogscale == 'true'):
+        if ylogscale in ['1', 'true'] and xlogscale in ['1', 'true']:
             output.write('set title "' + title + ' (log log)"' + "\n")
         else:
             output.write('set title "' + title + '"\n')
 
         # X axis Label
-        if xlogscale == '1' or xlogscale == 'true':
+        if xlogscale in ['1', 'true']:
             output.write('set xlabel "'+ xlabel +' (log)"' + "\n")
         else:
             output.write('set xlabel "'+ xlabel +'"' + "\n")
 
         # Y axis Label
-        if ylogscale == '1' or ylogscale == 'true':
+        if ylogscale in ['1', 'true']:
             output.write('set ylabel "'+ ylabel +' (log)"' + "\n")
         else:
             output.write('set ylabel "'+ ylabel +'"' + "\n")
@@ -400,11 +400,11 @@ class Stats:
         output.write('set pointsize 1.2' + "\n")
 
         # Logscale Y
-        if ylogscale == '1' or ylogscale == 'true':
+        if ylogscale in ['1', 'true']:
             output.write('set logscale y' + "\n")
 
         # Logscale X
-        if xlogscale == '1' or xlogscale == 'true':
+        if xlogscale in ['1', 'true']:
             output.write('set logscale x' + "\n")
 
         output.write('set terminal png' + "\n")
@@ -412,7 +412,7 @@ class Stats:
         mstring = 'set output "' + self.stats_dir + '/' + outputFile + '.png"' + "\n"
         mstring += 'plot "' + self.stats_dir + '/' + values + '.dat"'
 
-        if ylogscale == '1' or ylogscale == 'true':
+        if ylogscale in ['1', 'true']:
             mstring += ' using ' + str(xvalue) + ':' + str(yvalue) + ' title \'' + title + ' (log) \'' + '\n'
         else:
             mstring += ' using ' + str(xvalue) + ':' + str(yvalue) + ' title \'' + title + '\'' + '\n'
