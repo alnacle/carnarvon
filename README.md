@@ -1,5 +1,7 @@
 # carnarvon
 
+[![Code Issues](https://www.quantifiedcode.com/api/v1/project/06139ee389ee4ade82aa69188951c34a/badge.svg)](https://www.quantifiedcode.com/app/project/06139ee389ee4ade82aa69188951c34a)
+
 Carnarvon analyses how old the software system is on a per-line basis and extracts figures and indexes that make it
 possible to identify how `old' the software is, how much it has been maintained and how much effort it may suppose to
 maintain it in the future.
